@@ -9,25 +9,33 @@
         <canvas id="canvas" width="800" height="800"></canvas>
         <script>
             window.onload = function() {
+
                 var canvas = document.getElementById("canvas");
 
                 var ctx = canvas.getContext("2d");
 
-                ctx.fillStyle = "#000000";
+                function drawRandomValues(ctx, canvas_width, canvas_height) {
 
-                for (var x = 0; x < canvas.width; x++) {
+                    ctx.fillStyle = "#000000";
 
-                    for (var y = 0; y < canvas.height; y++) {
+                    for (var x = 0; x < canvas_width; x++) {
 
-                        if (Math.random() < 0.5) {
+                        for (var y = 0; y < canvas_height; y++) {
 
-                            ctx.fillRect(x, y, 1, 1);
+                            if (Math.random() < 0.5) {
+
+                                ctx.fillRect(x, y, 1, 1);
+
+                            }
 
                         }
 
                     }
 
                 }
+
+                drawRandomValues(ctx, canvas.width, canvas.height);
+                
             };
         </script>
     </body>
