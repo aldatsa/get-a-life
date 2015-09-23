@@ -20,12 +20,12 @@
                 //               0      1      2    3      4      5      6      7      8
                 var survive = [false, false, true, true, false, false, false, false, false];
 
-                var width = 800;
-                var height = 800;
+                var width = 600;
+                var height = 600;
 
                 var cells = [];
 
-                function drawRandomValues(ctx, width, height) {
+                function drawRandomValues(ctx, width, height, probability) {
 
                     ctx.fillStyle = "#000000";
 
@@ -35,7 +35,7 @@
 
                         for (var x = 0; x < width; x++) {
 
-                            if (Math.random() < 0.5) {
+                            if (Math.random() < probability) {
 
                                 cells[y][x] = true;
 
@@ -136,7 +136,7 @@
                     }
                 }
 
-                drawRandomValues(ctx, width, height);
+                drawRandomValues(ctx, width, height, 0.1);
 
                 setInterval(function() {
                     drawNextStep(ctx, width, height);
