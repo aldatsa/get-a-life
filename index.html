@@ -7,12 +7,15 @@
     </head>
     <body>
         <canvas id="canvas" width="800" height="800"></canvas>
-        <script>
+        <script type="text/javascript" src="js/CellularAutomaton.js"></script>
+        <script type="text/javascript">
             window.onload = function() {
 
                 var canvas = document.getElementById("canvas");
 
                 var ctx = canvas.getContext("2d");
+
+                // http://www.conwaylife.com/wiki/Rulestring#Rules
 
                 //            0      1      2     3      4      5      6      7      8
                 var born = [false, false, false, true, false, false, false, false, false];
@@ -22,124 +25,22 @@
 
                 var width = 600;
                 var height = 600;
+                var probability = 0.1;
 
-                var cells = [];
+                var cellular_automaton = new CellularAutomaton({
+                    rules: {
+                        born: born,
+                        survive: survive
+                    },
+                    width: width,
+                    height: height,
+                    probability: probability
+                });
 
-                function drawRandomValues(ctx, width, height, probability) {
-
-                    ctx.fillStyle = "#000000";
-
-                    for (var y = 0; y < height; y++) {
-
-                        cells[y] = [];
-
-                        for (var x = 0; x < width; x++) {
-
-                            if (Math.random() < probability) {
-
-                                cells[y][x] = true;
-
-                                ctx.fillRect(x, y, 1, 1);
-
-                            } else {
-
-                                cells[y][x] = false;
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                function drawNextStep(ctx, width, height) {
-
-                    var living_cells = 0;
-
-                    for (var y = 0; y < height; y++) {
-
-                        for (var x = 0; x < width; x++) {
-
-                            living_cells = 0;
-
-                            // Count sourrounding living cells.
-
-                            // Top left
-                            if (x > 0 && y > 0 && cells[y - 1][x - 1] === true) {
-                                living_cells++;
-                            }
-
-                            // Top
-                            if (y > 0 && cells[y - 1][x] === true) {
-                                living_cells++;
-                            }
-
-                            // Top right
-                            if (x < width - 1 && y > 0 && cells[y - 1][x + 1] === true) {
-                                living_cells++;
-                            }
-
-                            // Left
-                            if (x > 0 && cells[y][x - 1] === true) {
-                                living_cells++;
-                            }
-
-                            // Right
-                            if (x < width -1 && cells[y][x + 1] === true) {
-                                living_cells++;
-                            }
-
-                            // Bottom left
-                            if (x > 0 && y < height -1 && cells[y + 1][x - 1] === true) {
-                                living_cells++;
-                            }
-
-                            // Bottom
-                            if (y < height - 1 && cells[y + 1][x] === true) {
-                                living_cells++;
-                            }
-
-                            // Bottom right
-                            if (x < width - 1 && y < height - 1 && cells[y + 1][x + 1] === true) {
-                                living_cells++;
-                            }
-
-                            for (var i = 0; i < born.length; i++) {
-
-                                if (born[i] === true && i === living_cells) {
-
-                                    cells[y][x] = true;
-
-                                    ctx.fillStyle = "#000000";
-
-                                    ctx.fillRect(x, y, 1, 1);
-
-                                }
-
-                            }
-
-                            for (var i = 0; i < survive.length; i++) {
-
-                                if (survive[i] === false && i === living_cells) {
-
-                                    cells[y][x] = false;
-
-                                    ctx.fillStyle = "#ffffff";
-
-                                    ctx.fillRect(x, y, 1, 1);
-
-                                }
-
-                            }
-                        }
-                    }
-                }
-
-                drawRandomValues(ctx, width, height, 0.1);
+                cellular_automaton.drawRandomValues(ctx);
 
                 setInterval(function() {
-                    drawNextStep(ctx, width, height);
+                    cellular_automaton.drawNextStep(ctx);
                 }, 1000);
             };
         </script>
