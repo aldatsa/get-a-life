@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Life-like cellular automaton simulator written in JavaScript.
+Get a life is a [life-like cellular automaton](https://en.wikipedia.org/wiki/Life-like_cellular_automaton) explorer written in JavaScript.
 
 ## License
 
