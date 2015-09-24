@@ -7,6 +7,8 @@ var CellularAutomaton = function(args) {
         survive: args.rules.survive
     };
 
+    this.colors = args.colors;
+
     this.height = args.height;
     this.width = args.width;
     this.probability = args.probability;
@@ -14,8 +16,6 @@ var CellularAutomaton = function(args) {
 };
 
 CellularAutomaton.prototype.drawRandomValues = function(ctx) {
-
-    ctx.fillStyle = "#000000";
 
     for (var y = 0; y < this.height; y++) {
 
@@ -26,6 +26,8 @@ CellularAutomaton.prototype.drawRandomValues = function(ctx) {
             if (Math.random() < this.probability) {
 
                 this.cells[y][x] = true;
+
+                ctx.fillStyle = this.colors[1];
 
                 ctx.fillRect(x, y, 1, 1);
 
@@ -99,7 +101,7 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
 
                     this.cells[y][x] = true;
 
-                    ctx.fillStyle = "#000000";
+                    ctx.fillStyle = this.colors[1];
 
                     ctx.fillRect(x, y, 1, 1);
 
@@ -113,7 +115,7 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
 
                     this.cells[y][x] = false;
 
-                    ctx.fillStyle = "#ffffff";
+                    ctx.fillStyle = this.colors[0];
 
                     ctx.fillRect(x, y, 1, 1);
 
