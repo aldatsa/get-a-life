@@ -4,7 +4,8 @@ var CellularAutomaton = function(args) {
     this.cells[0] = [];
     this.cells[1] = [];
 
-    this.currentCells = 0;
+    this.current_array_index = 0;
+    this.previous_array_index = undefined;
 
     this.rules = {
         born: args.rules.born,
@@ -162,13 +163,13 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
 
     var alive_cells = 0;
 
-    if (this.currentCells === 0) {
-        this.currentCells = 1;
-        this.previousCells = 0;
+    if (this.current_array_index === 0) {
+        this.current_array_index = 1;
+        this.previous_array_index = 0;
         this.cells[1] = this.cells[0];
     } else {
-        this.currentCells = 0;
-        this.previousCells = 1;
+        this.current_array_index = 0;
+        this.previous_array_index = 1;
         this.cells[0] = this.cells[1];
     }
 
@@ -176,13 +177,13 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
 
         for (var x = 0; x < this.width; x++) {
 
-            alive_cells = this.getAliveCellCount(x, y, this.previousCells);
+            alive_cells = this.getAliveCellCount(x, y, this.previous_array_index);
 
             for (var i = 0; i < this.rules.born.length; i++) {
 
                 if (this.rules.born[i] === true && i === alive_cells) {
 
-                    this.cells[this.currentCells][y][x] = true;
+                    this.cells[this.current_array_index][y][x] = true;
 
                     ctx.fillStyle = this.colors[1];
 
@@ -196,7 +197,7 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
 
                 if (this.rules.survive[j] === false && j === alive_cells) {
 
-                    this.cells[this.currentCells][y][x] = false;
+                    this.cells[this.current_array_index][y][x] = false;
 
                     ctx.fillStyle = this.colors[0];
 
