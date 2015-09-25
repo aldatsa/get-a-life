@@ -41,9 +41,31 @@ CellularAutomaton.prototype.initialize = function(ctx, type) {
             this.cells[0][this.height / 2 + 1][this.width / 2 - 1] = true;
             this.cells[0][this.height / 2 + 1][this.width / 2] = true;
             this.cells[0][this.height / 2 + 2][this.width / 2] = true;
-            
+
             break;
 
+        case "random":
+        default:
+
+            for (var y = 0; y < this.height; y++) {
+
+                this.cells[0][y] = [];
+
+                for (var x = 0; x < this.width; x++) {
+
+                    if (Math.random() < this.probability) {
+
+                        this.cells[0][y][x] = true;
+
+                    } else {
+
+                        this.cells[0][y][x] = false;
+
+                    }
+
+                }
+
+            }
     }
 };
 
@@ -67,34 +89,6 @@ CellularAutomaton.prototype.draw = function(ctx, index) {
         }
 
     }
-};
-
-CellularAutomaton.prototype.drawRandomValues = function(ctx) {
-
-    for (var y = 0; y < this.height; y++) {
-
-        this.cells[0][y] = [];
-
-        for (var x = 0; x < this.width; x++) {
-
-            if (Math.random() < this.probability) {
-
-                this.cells[0][y][x] = true;
-
-                ctx.fillStyle = this.colors[1];
-
-                ctx.fillRect(x, y, 1, 1);
-
-            } else {
-
-                this.cells[0][y][x] = false;
-
-            }
-
-        }
-
-    }
-
 };
 
 CellularAutomaton.prototype.getAliveCellCount = function(x, y, index) {
