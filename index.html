@@ -41,10 +41,11 @@
                 //cellular_automaton.drawRandomValues(ctx);
                 cellular_automaton.initialize(ctx, "f-pentomino");
 
-                cellular_automaton.draw(ctx, 0);
+                cellular_automaton.draw(ctx);
 
                 setInterval(function() {
-                    cellular_automaton.drawNextStep(ctx);
+                    cellular_automaton.calculateNextGeneration(ctx);
+                    cellular_automaton.draw(ctx);
                 }, 1000);
             };
         </script>

@@ -87,13 +87,13 @@ CellularAutomaton.prototype.initialize = function(ctx, type) {
     }
 };
 
-CellularAutomaton.prototype.draw = function(ctx, index) {
+CellularAutomaton.prototype.draw = function(ctx) {
 
     for (var y = 0; y < this.height; y++) {
 
         for (var x = 0; x < this.width; x++) {
 
-            if (this.cells[index][y][x] === true) {
+            if (this.cells[this.current_array_index][y][x] === true) {
 
                 ctx.fillStyle = this.colors[1];
 
@@ -165,7 +165,7 @@ CellularAutomaton.prototype.getAliveCellCount = function(x, y, index) {
 
 };
 
-CellularAutomaton.prototype.drawNextStep = function(ctx) {
+CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
 
     var alive_cells = 0;
 
@@ -194,10 +194,6 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
 
                         this.cells[this.current_array_index][y][x] = true;
 
-                        ctx.fillStyle = this.colors[1];
-
-                        ctx.fillRect(x, y, 1, 1);
-
                     }
 
                 }
@@ -210,10 +206,6 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
                     if (this.rules.survive[j] === false && j === alive_cells) {
 
                         this.cells[this.current_array_index][y][x] = false;
-
-                        ctx.fillStyle = this.colors[0];
-
-                        ctx.fillRect(x, y, 1, 1);
 
                     }
 
