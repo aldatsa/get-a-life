@@ -38,7 +38,10 @@
                     probability: probability
                 });
 
-                cellular_automaton.drawRandomValues(ctx);
+                //cellular_automaton.drawRandomValues(ctx);
+                cellular_automaton.initialize(ctx, "r-pentomino");
+
+                cellular_automaton.draw(ctx, 0);
 
                 setInterval(function() {
                     cellular_automaton.drawNextStep(ctx);

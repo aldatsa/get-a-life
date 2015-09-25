@@ -19,6 +19,56 @@ var CellularAutomaton = function(args) {
 
 };
 
+CellularAutomaton.prototype.initialize = function(ctx, type) {
+
+    switch (type) {
+
+        case "r-pentomino":
+
+            for (var y = 0; y < this.height; y++) {
+
+                this.cells[0][y] = [];
+
+            }
+
+            ctx.fillStyle = this.colors[1];
+
+            //  xx
+            // xx
+            //  x
+            this.cells[0][this.height / 2][this.width / 2] = true;
+            this.cells[0][this.height / 2][this.width / 2 + 1] = true;
+            this.cells[0][this.height / 2 + 1][this.width / 2 - 1] = true;
+            this.cells[0][this.height / 2 + 1][this.width / 2] = true;
+            this.cells[0][this.height / 2 + 2][this.width / 2] = true;
+            
+            break;
+
+    }
+};
+
+CellularAutomaton.prototype.draw = function(ctx, index) {
+
+    for (var y = 0; y < this.height; y++) {
+
+        for (var x = 0; x < this.width; x++) {
+
+            if (this.cells[index][y][x] === true) {
+
+                ctx.fillStyle = this.colors[1];
+
+            } else {
+
+                ctx.fillStyle = this.colors[0];
+            }
+
+            ctx.fillRect(x, y, 1, 1);
+
+        }
+
+    }
+};
+
 CellularAutomaton.prototype.drawRandomValues = function(ctx) {
 
     for (var y = 0; y < this.height; y++) {
