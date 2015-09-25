@@ -109,6 +109,12 @@ CellularAutomaton.prototype.draw = function(ctx, index) {
     }
 };
 
+CellularAutomaton.prototype.isAlive = function(x, y, index) {
+
+    return this.cells[index][y][x];
+
+};
+
 CellularAutomaton.prototype.getAliveCellCount = function(x, y, index) {
 
     var alive_cells = 0;
@@ -179,29 +185,37 @@ CellularAutomaton.prototype.drawNextStep = function(ctx) {
 
             alive_cells = this.getAliveCellCount(x, y, this.previous_array_index);
 
-            for (var i = 0; i < this.rules.born.length; i++) {
+            // The current cell is dead. Does it born?
+            if (!this.isAlive(x, y, this.previous_array_index)) {
 
-                if (this.rules.born[i] === true && i === alive_cells) {
+                for (var i = 0; i < this.rules.born.length; i++) {
 
-                    this.cells[this.current_array_index][y][x] = true;
+                    if (this.rules.born[i] === true && i === alive_cells) {
 
-                    ctx.fillStyle = this.colors[1];
+                        this.cells[this.current_array_index][y][x] = true;
 
-                    ctx.fillRect(x, y, 1, 1);
+                        ctx.fillStyle = this.colors[1];
+
+                        ctx.fillRect(x, y, 1, 1);
+
+                    }
 
                 }
 
-            }
+            // The current cell is alive. Does it survive?
+            } else {
 
-            for (var j = 0; j < this.rules.survive.length; j++) {
+                for (var j = 0; j < this.rules.survive.length; j++) {
 
-                if (this.rules.survive[j] === false && j === alive_cells) {
+                    if (this.rules.survive[j] === false && j === alive_cells) {
 
-                    this.cells[this.current_array_index][y][x] = false;
+                        this.cells[this.current_array_index][y][x] = false;
 
-                    ctx.fillStyle = this.colors[0];
+                        ctx.fillStyle = this.colors[0];
 
-                    ctx.fillRect(x, y, 1, 1);
+                        ctx.fillRect(x, y, 1, 1);
+
+                    }
 
                 }
 
