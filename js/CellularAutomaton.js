@@ -23,7 +23,24 @@ CellularAutomaton.prototype.initialize = function(ctx, type) {
 
     switch (type) {
 
-        case "r-pentomino":
+        /*
+         * Draws the F-pentomino (also known as R-pentomino).
+         * During this early research, Conway discovered that the F-pentomino
+         * (which he called the "R-pentomino") failed to stabilize in a small
+         * number of generations.
+         * In fact, it takes 1103 generations to stabilize, by which time it has
+         * a population of 116 and has fired six escaping gliders
+         * (these were the first gliders ever discovered).
+         *
+         * The initial state is like that:
+         *
+         *          **
+         *         **
+         *          *
+         *
+         * http://www.conwaylife.com/wiki/F-pentomino
+         */
+        case "f-pentomino":
 
             for (var y = 0; y < this.height; y++) {
 
