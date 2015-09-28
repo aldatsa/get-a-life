@@ -39,14 +39,18 @@
                 });
 
                 //cellular_automaton.drawRandomValues(ctx);
-                cellular_automaton.initialize(ctx, "I-shaped-blinker");
+                cellular_automaton.initialize(ctx, "f-pentomino");
 
                 cellular_automaton.draw(ctx);
 
-                setInterval(function() {
+                //setInterval(function() {
                     cellular_automaton.calculateNextGeneration(ctx);
                     cellular_automaton.draw(ctx);
-                }, 1000);
+                //}, 1000);
+
+                cellular_automaton.calculateNextGeneration(ctx);
+                cellular_automaton.draw(ctx);
+                
             };
         </script>
     </body>

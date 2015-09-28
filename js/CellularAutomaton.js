@@ -67,8 +67,8 @@ CellularAutomaton.prototype.initialize = function(ctx, type) {
             // xx
             //  x
             this.cells[0][this.height / 2][this.width / 2] = true;
-            //this.cells[0][this.height / 2][this.width / 2 + 1] = true;
-            //this.cells[0][this.height / 2 + 1][this.width / 2 - 1] = true;
+            this.cells[0][this.height / 2][this.width / 2 + 1] = true;
+            this.cells[0][this.height / 2 + 1][this.width / 2 - 1] = true;
             this.cells[0][this.height / 2 + 1][this.width / 2] = true;
             this.cells[0][this.height / 2 + 2][this.width / 2] = true;
 
@@ -203,6 +203,8 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
 
     var alive_cells = 0;
 
+    var survives = true;
+
     if (this.current_array_index === 0) {
         this.current_array_index = 1;
         this.previous_array_index = 0;
@@ -215,6 +217,8 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
 
         for (var x = 0; x < this.width; x++) {
 
+            survives = true;
+
             alive_cells = this.getAliveCellCount(x, y, this.previous_array_index);
 
             // The current cell is dead. Does it born?
@@ -223,7 +227,7 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
                 for (var i = 0; i < this.rules.born.length; i++) {
 
                     if (this.rules.born[i] === true && i === alive_cells) {
-                        console.log(x + " " + y + " " + "borns");
+                        console.log(x + " " + y + " borns");
                         this.cells[this.current_array_index][y][x] = true;
                         break;
                     }
@@ -233,17 +237,24 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
             // The current cell is alive. Does it survive?
             } else {
 
+                console.log(x + " " + y + " has " + alive_cells + " alive neighbors");
+                
                 for (var j = 0; j < this.rules.survive.length; j++) {
 
                     if (this.rules.survive[j] === false && j === alive_cells) {
-                        console.log(x + " " + y + " " + "dies");
+                        console.log(x + " " + y + " dies");
                         this.cells[this.current_array_index][y][x] = false;
-                        break;
-                    } else {
-                        console.log(x + " " + y + " " + "survives");
-                        this.cells[this.current_array_index][y][x]  = true;
 
+                        survives = false;
+
+                        break;
                     }
+
+                }
+
+                if (survives) {
+
+                    this.cells[this.current_array_index][y][x] = true;
 
                 }
 
@@ -251,15 +262,15 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
         }
     }
 
-    console.log(this.cells[1][0]);
-    console.log(this.cells[1][1]);
-    console.log(this.cells[1][2]);
-    console.log(this.cells[1][3]);
-    console.log(this.cells[1][4]);
-    console.log(this.cells[1][5]);
-    console.log(this.cells[1][6]);
-    console.log(this.cells[1][7]);
-    console.log(this.cells[1][8]);
-    console.log(this.cells[1][9]);
+    console.log(this.cells[this.current_array_index][0]);
+    console.log(this.cells[this.current_array_index][1]);
+    console.log(this.cells[this.current_array_index][2]);
+    console.log(this.cells[this.current_array_index][3]);
+    console.log(this.cells[this.current_array_index][4]);
+    console.log(this.cells[this.current_array_index][5]);
+    console.log(this.cells[this.current_array_index][6]);
+    console.log(this.cells[this.current_array_index][7]);
+    console.log(this.cells[this.current_array_index][8]);
+    console.log(this.cells[this.current_array_index][9]);
 
 };
