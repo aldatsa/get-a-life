@@ -66,11 +66,17 @@ CellularAutomaton.prototype.initialize = function(ctx, type) {
             //  xx
             // xx
             //  x
-            this.cells[0][this.height / 2][this.width / 2] = true;
+            /*this.cells[0][this.height / 2][this.width / 2] = true;
             this.cells[0][this.height / 2][this.width / 2 + 1] = true;
             this.cells[0][this.height / 2 + 1][this.width / 2 - 1] = true;
             this.cells[0][this.height / 2 + 1][this.width / 2] = true;
             this.cells[0][this.height / 2 + 2][this.width / 2] = true;
+*/
+            this.cells[0][1][2] = true;
+            this.cells[0][1][3] = true;
+            this.cells[0][2][1] = true;
+            this.cells[0][2][2] = true;
+            this.cells[0][3][2] = true;
 
             break;
 
@@ -203,8 +209,6 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
 
     var alive_cells = 0;
 
-    var survives = true;
-
     if (this.current_array_index === 0) {
         this.current_array_index = 1;
         this.previous_array_index = 0;
@@ -213,11 +217,13 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
         this.previous_array_index = 1;
     }
 
+    // Copy the previous cell array to the current cell array.
+    // Careful! JavaScript copies arrays as reference by default ( array1 = array2; // array1 now points to array2)
+    this.cells[this.current_array_index] = this.cells[this.previous_array_index].slice();
+
     for (var y = 0; y < this.height; y++) {
 
         for (var x = 0; x < this.width; x++) {
-
-            survives = true;
 
             alive_cells = this.getAliveCellCount(x, y, this.previous_array_index);
 
@@ -227,7 +233,7 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
                 for (var i = 0; i < this.rules.born.length; i++) {
 
                     if (this.rules.born[i] === true && i === alive_cells) {
-                        console.log(x + " " + y + " borns");
+                        console.log(y + " " + x + " borns");
                         this.cells[this.current_array_index][y][x] = true;
                         break;
                     }
@@ -237,27 +243,18 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
             // The current cell is alive. Does it survive?
             } else {
 
-                console.log(x + " " + y + " has " + alive_cells + " alive neighbors");
-                
+                console.log(y + " " + x + " has " + alive_cells + " alive neighbors");
+
                 for (var j = 0; j < this.rules.survive.length; j++) {
 
                     if (this.rules.survive[j] === false && j === alive_cells) {
-                        console.log(x + " " + y + " dies");
+                        console.log(y + " " + x + " dies");
                         this.cells[this.current_array_index][y][x] = false;
-
-                        survives = false;
 
                         break;
                     }
 
                 }
-
-                if (survives) {
-
-                    this.cells[this.current_array_index][y][x] = true;
-
-                }
-
             }
         }
     }
