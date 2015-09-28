@@ -18,6 +18,25 @@ var CellularAutomaton = function(args) {
     this.width = args.width;
     this.probability = args.probability;
 
+    // http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
+    this.deepCopy = function(obj) {
+        if (Object.prototype.toString.call(obj) === '[object Array]') {
+            var out = [], i = 0, len = obj.length;
+            for ( ; i < len; i++ ) {
+                out[i] = arguments.callee(obj[i]);
+            }
+            return out;
+        }
+        if (typeof obj === 'object') {
+            var out = {}, i;
+            for ( i in obj ) {
+                out[i] = arguments.callee(obj[i]);
+            }
+            return out;
+        }
+        return obj;
+    };
+
 };
 
 CellularAutomaton.prototype.createCellArrays = function() {
@@ -36,7 +55,7 @@ CellularAutomaton.prototype.createCellArrays = function() {
 
     }
 
-}
+};
 
 CellularAutomaton.prototype.initialize = function(ctx, type) {
 
@@ -163,44 +182,52 @@ CellularAutomaton.prototype.getAliveCellCount = function(x, y, index) {
 
     // Top left
     if (x > 0 && y > 0 && this.cells[index][y - 1][x - 1] === true) {
+        console.log("tl");
         alive_cells++;
     }
 
     // Top
     if (y > 0 && this.cells[index][y - 1][x] === true) {
+        console.log("t");
         alive_cells++;
     }
 
     // Top right
     if (x < this.width - 1 && y > 0 && this.cells[index][y - 1][x + 1] === true) {
+        console.log("tr");
         alive_cells++;
     }
 
     // Left
     if (x > 0 && this.cells[index][y][x - 1] === true) {
+        console.log("l");
         alive_cells++;
     }
 
     // Right
     if (x < this.width -1 && this.cells[index][y][x + 1] === true) {
+        console.log("r");
         alive_cells++;
     }
 
     // Bottom left
     if (x > 0 && y < this.height -1 && this.cells[index][y + 1][x - 1] === true) {
+        console.log("bl");
         alive_cells++;
     }
 
     // Bottom
     if (y < this.height - 1 && this.cells[index][y + 1][x] === true) {
+        console.log("b");
         alive_cells++;
     }
 
     // Bottom right
     if (x < this.width - 1 && y < this.height - 1 && this.cells[index][y + 1][x + 1] === true) {
+        console.log("br");
         alive_cells++;
     }
-
+    console.log("---");
     return alive_cells;
 
 };
@@ -219,8 +246,11 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
 
     // Copy the previous cell array to the current cell array.
     // Careful! JavaScript copies arrays as reference by default ( array1 = array2; // array1 now points to array2)
-    this.cells[this.current_array_index] = this.cells[this.previous_array_index].slice();
-
+    // We can't do that:
+    // this.cells[this.current_array_index] = this.cells[this.previous_array_index].slice(0);
+    // We must deep copy: http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
+    this.cells[this.current_array_index] = this.deepCopy(this.cells[this.previous_array_index]);
+    
     for (var y = 0; y < this.height; y++) {
 
         for (var x = 0; x < this.width; x++) {
