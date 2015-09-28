@@ -23,8 +23,8 @@
                 //               0      1      2    3      4      5      6      7      8
                 var survive = [false, false, true, true, false, false, false, false, false];
 
-                var width = 10;
-                var height = 10;
+                var width = 500;
+                var height = 500;
                 var probability = 0.1;
 
                 var cellular_automaton = new CellularAutomaton({
@@ -43,28 +43,10 @@
 
                 cellular_automaton.draw(ctx);
 
-                //setInterval(function() {
+                setInterval(function() {
                     cellular_automaton.calculateNextGeneration(ctx);
                     cellular_automaton.draw(ctx);
-                //}, 1000);
-
-                cellular_automaton.calculateNextGeneration(ctx);
-                cellular_automaton.draw(ctx);
-
-                cellular_automaton.calculateNextGeneration(ctx);
-                cellular_automaton.draw(ctx);
-
-                cellular_automaton.calculateNextGeneration(ctx);
-                cellular_automaton.draw(ctx);
-
-                cellular_automaton.calculateNextGeneration(ctx);
-                cellular_automaton.draw(ctx);
-
-                cellular_automaton.calculateNextGeneration(ctx);
-                cellular_automaton.draw(ctx);
-
-                cellular_automaton.calculateNextGeneration(ctx);
-                cellular_automaton.draw(ctx);
+                }, 1000);
 
             };
         </script>
