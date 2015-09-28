@@ -20,7 +20,27 @@ var CellularAutomaton = function(args) {
 
 };
 
+CellularAutomaton.prototype.createCellArrays = function() {
+
+    for (var y = 0; y < this.height; y++) {
+
+        this.cells[0][y] = [];
+        this.cells[1][y] = [];
+
+        for (var x = 0; x < this.width; x++) {
+
+            this.cells[0][y][x] = false;
+            this.cells[1][y][x] = false;
+
+        }
+
+    }
+
+}
+
 CellularAutomaton.prototype.initialize = function(ctx, type) {
+
+    this.createCellArrays();
 
     switch (type) {
 
@@ -43,31 +63,31 @@ CellularAutomaton.prototype.initialize = function(ctx, type) {
          */
         case "f-pentomino":
 
-            for (var y = 0; y < this.height; y++) {
-
-                this.cells[0][y] = [];
-
-            }
-
-            ctx.fillStyle = this.colors[1];
-
             //  xx
             // xx
             //  x
             this.cells[0][this.height / 2][this.width / 2] = true;
-            this.cells[0][this.height / 2][this.width / 2 + 1] = true;
-            this.cells[0][this.height / 2 + 1][this.width / 2 - 1] = true;
+            //this.cells[0][this.height / 2][this.width / 2 + 1] = true;
+            //this.cells[0][this.height / 2 + 1][this.width / 2 - 1] = true;
             this.cells[0][this.height / 2 + 1][this.width / 2] = true;
             this.cells[0][this.height / 2 + 2][this.width / 2] = true;
 
+            break;
+
+        case "I-shaped-blinker":
+
+            //  x
+            //  x    <---->  x x x
+            //  x
+            this.cells[0][this.height / 2][this.width / 2] = true;
+            this.cells[0][this.height / 2 + 1][this.width / 2] = true;
+            this.cells[0][this.height / 2 + 2][this.width / 2] = true;
             break;
 
         case "random":
         default:
 
             for (var y = 0; y < this.height; y++) {
-
-                this.cells[0][y] = [];
 
                 for (var x = 0; x < this.width; x++) {
 
@@ -84,7 +104,21 @@ CellularAutomaton.prototype.initialize = function(ctx, type) {
                 }
 
             }
+            break;
+
     }
+
+    console.log(this.cells[0][0]);
+    console.log(this.cells[0][1]);
+    console.log(this.cells[0][2]);
+    console.log(this.cells[0][3]);
+    console.log(this.cells[0][4]);
+    console.log(this.cells[0][5]);
+    console.log(this.cells[0][6]);
+    console.log(this.cells[0][7]);
+    console.log(this.cells[0][8]);
+    console.log(this.cells[0][9]);
+
 };
 
 CellularAutomaton.prototype.draw = function(ctx) {
@@ -172,11 +206,9 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
     if (this.current_array_index === 0) {
         this.current_array_index = 1;
         this.previous_array_index = 0;
-        this.cells[1] = this.cells[0];
     } else {
         this.current_array_index = 0;
         this.previous_array_index = 1;
-        this.cells[0] = this.cells[1];
     }
 
     for (var y = 0; y < this.height; y++) {
@@ -191,9 +223,9 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
                 for (var i = 0; i < this.rules.born.length; i++) {
 
                     if (this.rules.born[i] === true && i === alive_cells) {
-
+                        console.log(x + " " + y + " " + "borns");
                         this.cells[this.current_array_index][y][x] = true;
-
+                        break;
                     }
 
                 }
@@ -204,8 +236,12 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
                 for (var j = 0; j < this.rules.survive.length; j++) {
 
                     if (this.rules.survive[j] === false && j === alive_cells) {
-
+                        console.log(x + " " + y + " " + "dies");
                         this.cells[this.current_array_index][y][x] = false;
+                        break;
+                    } else {
+                        console.log(x + " " + y + " " + "survives");
+                        this.cells[this.current_array_index][y][x]  = true;
 
                     }
 
@@ -214,4 +250,16 @@ CellularAutomaton.prototype.calculateNextGeneration = function(ctx) {
             }
         }
     }
+
+    console.log(this.cells[1][0]);
+    console.log(this.cells[1][1]);
+    console.log(this.cells[1][2]);
+    console.log(this.cells[1][3]);
+    console.log(this.cells[1][4]);
+    console.log(this.cells[1][5]);
+    console.log(this.cells[1][6]);
+    console.log(this.cells[1][7]);
+    console.log(this.cells[1][8]);
+    console.log(this.cells[1][9]);
+
 };
