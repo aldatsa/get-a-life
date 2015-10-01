@@ -12,6 +12,7 @@ var CellularAutomaton = function(args) {
         width = args.width,
         probability = args.probability,
         generation = 0,
+        alive_cells_count = 0,
 
     // http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
     deepCopy = function(obj) {
@@ -87,6 +88,8 @@ var CellularAutomaton = function(args) {
                 cells[0][height / 2 + 1][width / 2] = true;
                 cells[0][height / 2 + 2][width / 2] = true;
 
+                alive_cells_count = 5;
+
                 break;
 
             case "I-shaped-blinker":
@@ -97,6 +100,9 @@ var CellularAutomaton = function(args) {
                 cells[0][height / 2][width / 2] = true;
                 cells[0][height / 2 + 1][width / 2] = true;
                 cells[0][height / 2 + 2][width / 2] = true;
+
+                alive_cells_count = 3;
+
                 break;
 
             case "random":
@@ -109,6 +115,8 @@ var CellularAutomaton = function(args) {
                         if (Math.random() < probability) {
 
                             cells[0][y][x] = true;
+
+                            alive_cells_count++;
 
                         } else {
 
@@ -153,7 +161,7 @@ var CellularAutomaton = function(args) {
 
     },
 
-    getAliveCellCount = function(x, y, index) {
+    getAliveNeighborCount = function(x, y, index) {
 
         var alive_cells = 0;
 
@@ -217,6 +225,12 @@ var CellularAutomaton = function(args) {
 
     },
 
+    getAliveCellCount = function() {
+
+        return alive_cells_count;
+
+    },
+
     calculateNextGeneration = function(ctx) {
 
         var alive_cells = 0;
@@ -240,7 +254,7 @@ var CellularAutomaton = function(args) {
 
             for (var x = 0; x < width; x++) {
 
-                alive_cells = getAliveCellCount(x, y, previous_array_index);
+                alive_cells = getAliveNeighborCount(x, y, previous_array_index);
 
                 // The current cell is dead. Does it born?
                 if (!isAlive(x, y, previous_array_index)) {
@@ -250,6 +264,9 @@ var CellularAutomaton = function(args) {
                         if (rules.born[i] === true && i === alive_cells) {
 
                             cells[current_array_index][y][x] = true;
+
+                            alive_cells_count++;
+
                             break;
                         }
 
@@ -263,6 +280,8 @@ var CellularAutomaton = function(args) {
                         if (rules.survive[j] === false && j === alive_cells) {
 
                             cells[current_array_index][y][x] = false;
+
+                            alive_cells_count--;
 
                             break;
                         }
@@ -279,6 +298,7 @@ var CellularAutomaton = function(args) {
     return {
         calculateNextGeneration: calculateNextGeneration,
         draw: draw,
+        getAliveCellCount: getAliveCellCount,
         getGenerationCount: getGenerationCount,
         initialize: initialize
     };

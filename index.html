@@ -6,14 +6,17 @@
         <title>Get a life</title>
     </head>
     <body>
-        <div id="generation-container">Generation: 0</div>
+        <div id="generation-counter">Generation: 0</div>
+        <div id="alive-cell-counter">Number of alive cells: 0</div>
+
         <canvas id="canvas" width="800" height="800"></canvas>
         <script type="text/javascript" src="js/CellularAutomaton.js"></script>
         <script type="text/javascript">
             window.onload = function() {
 
                 var canvas = document.getElementById("canvas");
-                var generation_container = document.getElementById("generation-container");
+                var generation_counter = document.getElementById("generation-counter");
+                var alive_cell_counter = document.getElementById("alive-cell-counter");
 
                 var ctx = canvas.getContext("2d");
 
@@ -45,11 +48,16 @@
 
                 cellular_automaton.draw(ctx);
 
+                alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
+
                 setInterval(function() {
                     cellular_automaton.calculateNextGeneration(ctx);
                     cellular_automaton.draw(ctx);
 
-                    generation_container.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
+                    generation_counter.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
+
+                    alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
+
 
                 }, 1000);
 
