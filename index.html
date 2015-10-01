@@ -6,12 +6,14 @@
         <title>Get a life</title>
     </head>
     <body>
+        <div id="generation-container">Generation: 0</div>
         <canvas id="canvas" width="800" height="800"></canvas>
         <script type="text/javascript" src="js/CellularAutomaton.js"></script>
         <script type="text/javascript">
             window.onload = function() {
 
                 var canvas = document.getElementById("canvas");
+                var generation_container = document.getElementById("generation-container");
 
                 var ctx = canvas.getContext("2d");
 
@@ -46,6 +48,9 @@
                 setInterval(function() {
                     cellular_automaton.calculateNextGeneration(ctx);
                     cellular_automaton.draw(ctx);
+
+                    generation_container.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
+
                 }, 1000);
 
             };
