@@ -1,4 +1,5 @@
 var CellularAutomaton = function(args) {
+    "use strict";
 
     var cells = [],
         current_array_index = 0,
@@ -14,19 +15,22 @@ var CellularAutomaton = function(args) {
         generation = 0,
         alive_cells_count = 0,
 
-    // http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
+    // Based on http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
     deepCopy = function(obj) {
+        var out, i, len;
         if (Object.prototype.toString.call(obj) === '[object Array]') {
-            var out = [], i = 0, len = obj.length;
+            out = [];
+            i = 0;
+            len = obj.length;
             for ( ; i < len; i++ ) {
-                out[i] = arguments.callee(obj[i]);
+                out[i] = deepCopy(obj[i]);
             }
             return out;
         }
         if (typeof obj === 'object') {
-            var out = {}, i;
+            out = {};
             for ( i in obj ) {
-                out[i] = arguments.callee(obj[i]);
+                out[i] = deepCopy(obj[i]);
             }
             return out;
         }
