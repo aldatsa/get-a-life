@@ -9,8 +9,11 @@ var CellularAutomaton = function(args) {
             survive: args.rules.survive
         },
         colors = args.colors,
-        height = args.height,
-        width = args.width,
+        cell_size = args.cell_size,
+        canvas_height = args.height,
+        canvas_width = args.width,
+        height = canvas_height / cell_size,
+        width = canvas_width / cell_size,
         probability = args.probability,
         generation = 0,
         alive_cells_count = 0,
@@ -152,7 +155,7 @@ var CellularAutomaton = function(args) {
                     ctx.fillStyle = colors[0];
                 }
 
-                ctx.fillRect(x, y, 1, 1);
+                ctx.fillRect(x * cell_size, y * cell_size, cell_size, cell_size);
 
             }
 
