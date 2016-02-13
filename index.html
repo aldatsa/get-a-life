@@ -60,6 +60,14 @@
 
                 document.getElementById("start-button").addEventListener("click", function( event ) {
 
+                    var initial_value = document.getElementById("initial-state").value;
+
+                    cellular_automaton.initialize(ctx, initial_value);
+
+                    cellular_automaton.draw(ctx);
+
+                    alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
+
                     setInterval(function() {
                         cellular_automaton.calculateNextGeneration(ctx);
                         cellular_automaton.draw(ctx);
