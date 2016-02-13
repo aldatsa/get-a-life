@@ -52,13 +52,7 @@
                     probability: probability
                 });
 
-                cellular_automaton.initialize(ctx, "f-pentomino");
-
-                cellular_automaton.draw(ctx);
-
-                alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
-
-                document.getElementById("start-button").addEventListener("click", function( event ) {
+                function drawInitialState() {
 
                     var initial_value = document.getElementById("initial-state").value;
 
@@ -67,6 +61,14 @@
                     cellular_automaton.draw(ctx);
 
                     alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
+
+                }
+
+                drawInitialState();
+
+                document.getElementById("start-button").addEventListener("click", function( event ) {
+
+                    drawInitialState();
 
                     setInterval(function() {
                         cellular_automaton.calculateNextGeneration(ctx);
