@@ -304,9 +304,9 @@ var CellularAutomaton = function(args) {
 
     },
 
-    start = function(ctx, initial_value) {
+    start = function(ctx, initial_state) {
 
-        initialize(ctx, initial_value);
+        initialize(ctx, initial_state);
 
         draw(ctx);
 
