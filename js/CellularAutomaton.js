@@ -15,6 +15,7 @@ var CellularAutomaton = function(args) {
         height = canvas_height / cell_size,
         width = canvas_width / cell_size,
         probability = args.probability,
+        afterStepCallback = args.afterStepCallback,
         generation = 0,
         alive_cells_count = 0,
         interval,
@@ -303,7 +304,7 @@ var CellularAutomaton = function(args) {
 
     },
 
-    start = function(ctx, callback) {
+    start = function(ctx) {
 
         // Clear the previous interval
         clearInterval(interval);
@@ -313,7 +314,7 @@ var CellularAutomaton = function(args) {
             calculateNextGeneration(ctx);
             draw(ctx);
 
-            callback();
+            afterStepCallback();
 
         }, 1000);
 
