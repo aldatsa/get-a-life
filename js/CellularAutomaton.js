@@ -306,12 +306,15 @@ var CellularAutomaton = function(args) {
 
     start = function(ctx, initial_state) {
 
+        // Clear the previous interval
+        clearInterval(interval);
+
+        generation = 0;
+        alive_cells_count = 0;
+
         initialize(ctx, initial_state);
 
         draw(ctx);
-
-        // Clear the previous interval
-        clearInterval(interval);
 
         interval = setInterval(function() {
 
