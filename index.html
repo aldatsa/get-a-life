@@ -6,6 +6,13 @@
         <title>Get a life</title>
     </head>
     <body>
+        <label for="initial-state">Initial state</label>
+        <select id="initial-state">
+            <option value="f-pentomino" selected="selected">F-pentomino</option>
+            <option value="random">Random</option>
+        </select>
+        <button id="start-button">Start</button>
+
         <div id="generation-counter">Generation: 0</div>
         <div id="alive-cell-counter">Number of alive cells: 0</div>
 
@@ -45,23 +52,26 @@
                     probability: probability
                 });
 
-                //cellular_automaton.drawRandomValues(ctx);
                 cellular_automaton.initialize(ctx, "f-pentomino");
 
                 cellular_automaton.draw(ctx);
 
                 alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
 
-                setInterval(function() {
-                    cellular_automaton.calculateNextGeneration(ctx);
-                    cellular_automaton.draw(ctx);
+                document.getElementById("start-button").addEventListener("click", function( event ) {
 
-                    generation_counter.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
+                    setInterval(function() {
+                        cellular_automaton.calculateNextGeneration(ctx);
+                        cellular_automaton.draw(ctx);
 
-                    alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
+                        generation_counter.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
+
+                        alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
 
 
-                }, 1000);
+                    }, 1000);
+
+                }, false);
 
             };
         </script>
