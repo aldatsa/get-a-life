@@ -304,7 +304,11 @@ var CellularAutomaton = function(args) {
 
     },
 
-    start = function(ctx) {
+    start = function(ctx, initial_value) {
+
+        initialize(ctx, initial_value);
+
+        draw(ctx);
 
         // Clear the previous interval
         clearInterval(interval);

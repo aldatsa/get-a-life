@@ -59,25 +59,11 @@
                     }
                 });
 
-                function drawInitialState() {
+                document.getElementById("start-button").addEventListener("click", function( event ) {
 
                     var initial_value = document.getElementById("initial-state").value;
 
-                    cellular_automaton.initialize(ctx, initial_value);
-
-                    cellular_automaton.draw(ctx);
-
-                    alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
-
-                }
-
-                drawInitialState();
-
-                document.getElementById("start-button").addEventListener("click", function( event ) {
-
-                    drawInitialState();
-
-                    cellular_automaton.start(ctx);
+                    cellular_automaton.start(ctx, initial_value);
 
                 }, false);
 
