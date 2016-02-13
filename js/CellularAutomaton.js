@@ -17,6 +17,7 @@ var CellularAutomaton = function(args) {
         probability = args.probability,
         generation = 0,
         alive_cells_count = 0,
+        interval,
 
     // Based on http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
     deepCopy = function(obj) {
@@ -300,6 +301,22 @@ var CellularAutomaton = function(args) {
 
         generation++;
 
+    },
+
+    start = function(ctx, callback) {
+
+        // Clear the previous interval
+        clearInterval(interval);
+
+        interval = setInterval(function() {
+
+            calculateNextGeneration(ctx);
+            draw(ctx);
+
+            callback();
+
+        }, 1000);
+
     };
 
     return {
@@ -307,6 +324,7 @@ var CellularAutomaton = function(args) {
         draw: draw,
         getAliveCellCount: getAliveCellCount,
         getGenerationCount: getGenerationCount,
-        initialize: initialize
+        initialize: initialize,
+        start: start
     };
 };

@@ -70,16 +70,13 @@
 
                     drawInitialState();
 
-                    setInterval(function() {
-                        cellular_automaton.calculateNextGeneration(ctx);
-                        cellular_automaton.draw(ctx);
+                    cellular_automaton.start(ctx, function() {
 
                         generation_counter.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
 
                         alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
-
-
-                    }, 1000);
+                        
+                    });
 
                 }, false);
 
