@@ -6,6 +6,30 @@
         <title>Get a life</title>
     </head>
     <body>
+        <div class="survival-rules">
+            <label>Survival</label>
+            <input type="checkbox" class="survival" id="survival-0" value="0" />0
+            <input type="checkbox" class="survival" id="survival-1" value="1" />1
+            <input type="checkbox" class="survival" id="survival-2" value="2" />2
+            <input type="checkbox" class="survival" id="survival-3" value="3" />3
+            <input type="checkbox" class="survival" id="survival-4" value="4" />4
+            <input type="checkbox" class="survival" id="survival-5" value="5" />5
+            <input type="checkbox" class="survival" id="survival-6" value="6" />6
+            <input type="checkbox" class="survival" id="survival-7" value="7" />7
+            <input type="checkbox" class="survival" id="survival-8" value="8" />8
+        </div>
+        <div class="born-rules">
+            <label>Born</label>
+            <input type="checkbox" class="born" id="born-0" value="0" />0
+            <input type="checkbox" class="born" id="born-1" value="1" />1
+            <input type="checkbox" class="born" id="born-2" value="2" />2
+            <input type="checkbox" class="born" id="born-3" value="3" />3
+            <input type="checkbox" class="born" id="born-4" value="4" />4
+            <input type="checkbox" class="born" id="born-5" value="5" />5
+            <input type="checkbox" class="born" id="born-6" value="6" />6
+            <input type="checkbox" class="born" id="born-7" value="7" />7
+            <input type="checkbox" class="born" id="born-8" value="8" />8
+        </div>
         <label for="initial-state">Initial state</label>
         <select id="initial-state">
             <option value="f-pentomino" selected="selected">F-pentomino</option>
@@ -33,7 +57,7 @@
                 var born = [false, false, false, true, false, false, false, false, false];
 
                 //               0      1      2    3      4      5      6      7      8
-                var survive = [false, false, true, true, false, false, false, false, false];
+                var survival = [false, false, true, true, false, false, false, false, false];
 
                 var width = 500;
                 var height = 500;
@@ -43,7 +67,7 @@
                 var cellular_automaton = CellularAutomaton({
                     rules: {
                         born: born,
-                        survive: survive
+                        survival: survival
                     },
                     colors: ["#ffffff", "#000000"],
                     width: width,
@@ -57,6 +81,20 @@
                         alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
 
                     }
+                });
+
+                // Display the default born rules.
+                born.forEach(function(element, index, array) {
+
+                    document.getElementById("born-" + index).checked = element;
+
+                });
+
+                // Display the default survival rules.
+                survival.forEach(function(element, index, array) {
+
+                    document.getElementById("survival-" + index).checked = element;
+
                 });
 
                 document.getElementById("start-button").addEventListener("click", function( event ) {

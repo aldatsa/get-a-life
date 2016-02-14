@@ -6,7 +6,7 @@ var CellularAutomaton = function(args) {
         previous_array_index,
         rules = {
             born: args.rules.born,
-            survive: args.rules.survive
+            survival: args.rules.survival
         },
         colors = args.colors,
         cell_size = args.cell_size,
@@ -284,9 +284,9 @@ var CellularAutomaton = function(args) {
                 // The current cell is alive. Does it survive?
                 } else {
 
-                    for (var j = 0; j < rules.survive.length; j++) {
+                    for (var j = 0; j < rules.survival.length; j++) {
 
-                        if (rules.survive[j] === false && j === alive_cells) {
+                        if (rules.survival[j] === false && j === alive_cells) {
 
                             cells[current_array_index][y][x] = false;
 
