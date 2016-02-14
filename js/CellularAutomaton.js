@@ -309,8 +309,10 @@ var CellularAutomaton = function(args) {
         // Clear the previous interval
         clearInterval(interval);
 
+        // Reset the inner variables of the automaton.
         generation = 0;
         alive_cells_count = 0;
+        current_array_index = 0;
 
         initialize(ctx, initial_state);
 
