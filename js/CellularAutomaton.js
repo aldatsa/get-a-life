@@ -325,6 +325,18 @@ var CellularAutomaton = function(args) {
 
         }, 1000);
 
+    },
+
+    setSurvivalRules = function(survival_rules) {
+
+        rules.survival = survival_rules;
+
+    },
+
+    setBornRules = function(born_rules) {
+
+        rules.born = born_rules;
+
     };
 
     return {
@@ -333,6 +345,8 @@ var CellularAutomaton = function(args) {
         getAliveCellCount: getAliveCellCount,
         getGenerationCount: getGenerationCount,
         initialize: initialize,
-        start: start
+        start: start,
+        setSurvivalRules: setSurvivalRules,
+        setBornRules: setBornRules
     };
 };
