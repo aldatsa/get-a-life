@@ -83,12 +83,19 @@
                     var initial_state = document.getElementById("initial-state").value;
 
                     var born_checkboxes = document.getElementsByClassName("born");
+                    var survival_checkboxes = document.getElementsByClassName("survival");
 
                     // getElementsByClassName returns an HTMLCollection so we can't use forEach directly.
                     // http://stackoverflow.com/questions/3871547/js-iterating-over-result-of-getelementsbyclassname-using-array-foreach
                     Array.prototype.forEach.call(born_checkboxes, function(element, index, array) {
 
                         born[index] = element.checked;
+
+                    });
+
+                    Array.prototype.forEach.call(survival_checkboxes, function(element, index, array) {
+
+                        survival[index] = element.checked;
 
                     });
 
