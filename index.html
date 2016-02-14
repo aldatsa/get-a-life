@@ -64,25 +64,6 @@
                 var probability = 0.1;
                 var cell_size = 10;
 
-                var cellular_automaton = CellularAutomaton({
-                    rules: {
-                        born: born,
-                        survival: survival
-                    },
-                    colors: ["#ffffff", "#000000"],
-                    width: width,
-                    height: height,
-                    cell_size: cell_size,
-                    probability: probability,
-                    afterStepCallback: function() {
-
-                        generation_counter.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
-
-                        alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
-
-                    }
-                });
-
                 // Display the default born rules.
                 born.forEach(function(element, index, array) {
 
@@ -100,6 +81,35 @@
                 document.getElementById("start-button").addEventListener("click", function( event ) {
 
                     var initial_state = document.getElementById("initial-state").value;
+
+                    var born_checkboxes = document.getElementsByClassName("born");
+
+                    // getElementsByClassName returns an HTMLCollection so we can't use forEach directly.
+                    // http://stackoverflow.com/questions/3871547/js-iterating-over-result-of-getelementsbyclassname-using-array-foreach
+                    Array.prototype.forEach.call(born_checkboxes, function(element, index, array) {
+
+                        born[index] = element.checked;
+
+                    });
+
+                    var cellular_automaton = CellularAutomaton({
+                        rules: {
+                            born: born,
+                            survival: survival
+                        },
+                        colors: ["#ffffff", "#000000"],
+                        width: width,
+                        height: height,
+                        cell_size: cell_size,
+                        probability: probability,
+                        afterStepCallback: function() {
+
+                            generation_counter.innerHTML = "Generation: " + cellular_automaton.getGenerationCount();
+
+                            alive_cell_counter.innerHTML = "Number of alive cells: " + cellular_automaton.getAliveCellCount();
+
+                        }
+                    });
 
                     cellular_automaton.start(ctx, initial_state);
 
