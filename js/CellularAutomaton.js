@@ -9,6 +9,7 @@ var CellularAutomaton = function(args) {
             survival: args.rules.survival
         },
         colors = args.colors,
+        grid_color = "#ccc",
         cell_size = args.cell_size,
         canvas_height = args.height,
         canvas_width = args.width,
@@ -142,6 +143,20 @@ var CellularAutomaton = function(args) {
 
     },
 
+    drawGrid = function(ctx) {
+
+        for (var x = 0; x < width; x++) {
+            ctx.fillStyle = grid_color;
+            ctx.fillRect(x * cell_size, 0, 1, height * cell_size);
+        }
+
+        for (var y = 0; y < height; y++) {
+            ctx.fillStyle = grid_color;
+            ctx.fillRect(0, y * cell_size, width * cell_size, 1);
+        }
+
+    },
+
     draw = function(ctx) {
 
         for (var y = 0; y < height; y++) {
@@ -157,7 +172,7 @@ var CellularAutomaton = function(args) {
                     ctx.fillStyle = colors[0];
                 }
 
-                ctx.fillRect(x * cell_size, y * cell_size, cell_size, cell_size);
+                ctx.fillRect(x * cell_size + 1, y * cell_size + 1, cell_size - 1, cell_size - 1);
 
             }
 
@@ -321,6 +336,8 @@ var CellularAutomaton = function(args) {
         interval = setInterval(function() {
 
             calculateNextGeneration(ctx);
+
+            drawGrid(ctx);
             draw(ctx);
 
             afterStepCallback();
@@ -349,6 +366,7 @@ var CellularAutomaton = function(args) {
         initialize: initialize,
         start: start,
         setSurvivalRules: setSurvivalRules,
-        setBornRules: setBornRules
+        setBornRules: setBornRules,
+        drawGrid: drawGrid
     };
 };
