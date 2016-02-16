@@ -9,7 +9,7 @@ var CellularAutomaton = function(args) {
             survival: args.rules.survival
         },
         colors = args.colors,
-        grid_color = "#ccc",
+        grid_color = args.grid_color || "#cccccc",
         cell_size = args.cell_size,
         canvas_height = args.height,
         canvas_width = args.width,
