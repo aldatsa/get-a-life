@@ -145,12 +145,12 @@ var CellularAutomaton = function(args) {
 
     drawGrid = function(ctx) {
 
-        for (var x = 0; x < width; x++) {
+        for (var x = 0; x <= width; x++) {
             ctx.fillStyle = grid_color;
             ctx.fillRect(x * cell_size, 0, 1, height * cell_size);
         }
 
-        for (var y = 0; y < height; y++) {
+        for (var y = 0; y <= height; y++) {
             ctx.fillStyle = grid_color;
             ctx.fillRect(0, y * cell_size, width * cell_size, 1);
         }
