@@ -40,7 +40,7 @@
         <div id="generation-counter">Generation: 0</div>
         <div id="alive-cell-counter">Number of alive cells: 0</div>
 
-        <canvas id="canvas" width="800" height="800"></canvas>
+        <canvas id="canvas" width="501" height="501"></canvas>
         <script type="text/javascript" src="js/CellularAutomaton.js"></script>
         <script type="text/javascript">
             window.onload = function() {
@@ -59,8 +59,26 @@
                 //               0      1      2    3      4      5      6      7      8
                 var survival = [false, false, true, true, false, false, false, false, false];
 
-                var width = 500;
-                var height = 500;
+                var width = 500;//canvas.width;
+                var height = 500;// canvas.height;
+                var screen_width = window.screen.width;
+                var screen_height = window.screen.height;
+
+                var scale = 1;
+
+                // If the width of the screen is smaller than the width of the canvas...
+                if (screen_width < width) {
+
+                    // Calculate the scale.
+                    scale = screen_width / width - 0.04;
+
+                    // The top left of the scaled canvas must be the same as the top left of the original canvas.
+                    canvas.style["transform-origin"] = "top left";
+
+                    // Scale the canvas to fit the screen.
+                    canvas.style.transform = "scale(" + scale + ")";
+                }
+
                 var probability = 0.1;
                 var cell_size = 10;
 
