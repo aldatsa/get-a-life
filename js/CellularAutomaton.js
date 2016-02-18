@@ -59,7 +59,7 @@ var CellularAutomaton = function(args) {
             scale = screen_width / canvas_width - 0.04;
 
         }
-        
+
         // The top left of the scaled canvas must be the same as the top left of the original canvas.
         canvas.style["transform-origin"] = "top left";
 
@@ -383,6 +383,10 @@ var CellularAutomaton = function(args) {
 
     };
 
+    window.addEventListener("resize", function(event) {
+        resizeCanvas();
+    });
+    
     return {
         calculateNextGeneration: calculateNextGeneration,
         draw: draw,
@@ -392,7 +396,6 @@ var CellularAutomaton = function(args) {
         start: start,
         setSurvivalRules: setSurvivalRules,
         setBornRules: setBornRules,
-        drawGrid: drawGrid,
-        resizeCanvas: resizeCanvas
+        drawGrid: drawGrid
     };
 };
