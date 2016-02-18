@@ -45,6 +45,29 @@ var CellularAutomaton = function(args) {
         return obj;
     },
 
+    resizeCanvas = function() {
+
+        var screen_width = window.screen.width;
+        var screen_height = window.screen.height;
+
+        var scale = 1;
+
+        // If the width of the screen is smaller than the width of the canvas...
+        if (screen_width < canvas_width) {
+
+            // Calculate the scale.
+            scale = screen_width / canvas_width - 0.04;
+
+        }
+        
+        // The top left of the scaled canvas must be the same as the top left of the original canvas.
+        canvas.style["transform-origin"] = "top left";
+
+        // Scale the canvas.
+        canvas.style.transform = "scale(" + scale + ")";
+
+    },
+
     createCellArrays = function() {
 
         cells[0] = [];
@@ -369,6 +392,7 @@ var CellularAutomaton = function(args) {
         start: start,
         setSurvivalRules: setSurvivalRules,
         setBornRules: setBornRules,
-        drawGrid: drawGrid
+        drawGrid: drawGrid,
+        resizeCanvas: resizeCanvas
     };
 };
