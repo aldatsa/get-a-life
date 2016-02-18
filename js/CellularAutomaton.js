@@ -89,7 +89,7 @@ var CellularAutomaton = function(args) {
 
     },
 
-    initialize = function(context, type) {
+    initialize = function(type) {
 
         createCellArrays();
 
@@ -386,7 +386,7 @@ var CellularAutomaton = function(args) {
     window.addEventListener("resize", function(event) {
         resizeCanvas();
     });
-    
+
     return {
         calculateNextGeneration: calculateNextGeneration,
         draw: draw,
