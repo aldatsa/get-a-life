@@ -388,11 +388,8 @@ var CellularAutomaton = function(args) {
     });
 
     return {
-        calculateNextGeneration: calculateNextGeneration,
-        draw: draw,
         getAliveCellCount: getAliveCellCount,
         getGenerationCount: getGenerationCount,
-        initialize: initialize,
         start: start,
         setSurvivalRules: setSurvivalRules,
         setBornRules: setBornRules,
