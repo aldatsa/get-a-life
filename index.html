@@ -57,9 +57,6 @@
                 //               0      1      2    3      4      5      6      7      8
                 var survival = [false, false, true, true, false, false, false, false, false];
 
-                var width = 500;//canvas.width;
-                var height = 500;// canvas.height;
-
                 var probability = 0.1;
                 var cell_size = 10;
 
@@ -71,8 +68,6 @@
                     },
                     colors: ["#ffffff", "#000000"],
                     grid_color: "#cccccc",
-                    width: width,
-                    height: height,
                     cell_size: cell_size,
                     probability: probability,
                     afterStepCallback: function() {
