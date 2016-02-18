@@ -4,6 +4,8 @@ var CellularAutomaton = function(args) {
     var cells = [],
         current_array_index = 0,
         previous_array_index,
+        canvas = args.canvas,
+        context = canvas.getContext("2d"),
         rules = {
             born: args.rules.born,
             survival: args.rules.survival
@@ -64,7 +66,7 @@ var CellularAutomaton = function(args) {
 
     },
 
-    initialize = function(ctx, type) {
+    initialize = function(context, type) {
 
         createCellArrays();
 
@@ -143,21 +145,21 @@ var CellularAutomaton = function(args) {
 
     },
 
-    drawGrid = function(ctx) {
+    drawGrid = function() {
 
         for (var x = 0; x <= width; x++) {
-            ctx.fillStyle = grid_color;
-            ctx.fillRect(x * cell_size, 0, 1, height * cell_size);
+            context.fillStyle = grid_color;
+            context.fillRect(x * cell_size, 0, 1, height * cell_size);
         }
 
         for (var y = 0; y <= height; y++) {
-            ctx.fillStyle = grid_color;
-            ctx.fillRect(0, y * cell_size, width * cell_size, 1);
+            context.fillStyle = grid_color;
+            context.fillRect(0, y * cell_size, width * cell_size, 1);
         }
 
     },
 
-    draw = function(ctx) {
+    draw = function() {
 
         for (var y = 0; y < height; y++) {
 
@@ -165,14 +167,14 @@ var CellularAutomaton = function(args) {
 
                 if (cells[current_array_index][y][x] === true) {
 
-                    ctx.fillStyle = colors[1];
+                    context.fillStyle = colors[1];
 
                 } else {
 
-                    ctx.fillStyle = colors[0];
+                    context.fillStyle = colors[0];
                 }
 
-                ctx.fillRect(x * cell_size + 1, y * cell_size + 1, cell_size - 1, cell_size - 1);
+                context.fillRect(x * cell_size + 1, y * cell_size + 1, cell_size - 1, cell_size - 1);
 
             }
 
@@ -255,7 +257,7 @@ var CellularAutomaton = function(args) {
 
     },
 
-    calculateNextGeneration = function(ctx) {
+    calculateNextGeneration = function() {
 
         var alive_cells = 0;
 
@@ -319,7 +321,7 @@ var CellularAutomaton = function(args) {
 
     },
 
-    start = function(ctx, initial_state) {
+    start = function(initial_state) {
 
         // Clear the previous interval
         clearInterval(interval);
@@ -329,16 +331,16 @@ var CellularAutomaton = function(args) {
         alive_cells_count = 0;
         current_array_index = 0;
 
-        initialize(ctx, initial_state);
+        initialize(initial_state);
 
-        draw(ctx);
+        draw();
 
         interval = setInterval(function() {
 
-            calculateNextGeneration(ctx);
+            calculateNextGeneration();
 
-            drawGrid(ctx);
-            draw(ctx);
+            drawGrid();
+            draw();
 
             afterStepCallback();
 
