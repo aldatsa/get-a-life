@@ -61,23 +61,6 @@
 
                 var width = 500;//canvas.width;
                 var height = 500;// canvas.height;
-                var screen_width = window.screen.width;
-                var screen_height = window.screen.height;
-
-                var scale = 1;
-
-                // If the width of the screen is smaller than the width of the canvas...
-                if (screen_width < width) {
-
-                    // Calculate the scale.
-                    scale = screen_width / width - 0.04;
-
-                    // The top left of the scaled canvas must be the same as the top left of the original canvas.
-                    canvas.style["transform-origin"] = "top left";
-
-                    // Scale the canvas to fit the screen.
-                    canvas.style.transform = "scale(" + scale + ")";
-                }
 
                 var probability = 0.1;
                 var cell_size = 10;
@@ -116,6 +99,35 @@
 
                     document.getElementById("survival-" + index).checked = element;
 
+                });
+
+                resizeCanvas(canvas, width);
+
+                function resizeCanvas(canvas, width) {
+
+                    var screen_width = window.screen.width;
+                    var screen_height = window.screen.height;
+                    var scale = 1;
+
+                    // If the width of the screen is smaller than the width of the canvas...
+                    if (screen_width < width) {
+
+                        // Calculate the scale.
+                        scale = screen_width / width - 0.04;
+
+                    }
+
+                    // The top left of the scaled canvas must be the same as the top left of the original canvas.
+                    canvas.style["transform-origin"] = "top left";
+
+                    // Scale the canvas.
+                    canvas.style.transform = "scale(" + scale + ")";
+
+                }
+
+                window.addEventListener("resize", function(event) {
+                    console.log("resize");
+                    resizeCanvas(canvas, width);
                 });
 
                 document.getElementById("start-button").addEventListener("click", function( event ) {
